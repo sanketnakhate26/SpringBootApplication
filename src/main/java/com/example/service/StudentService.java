@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.entity.Student;
 import com.example.repository.StudentRepository;
+import com.example.request.CreateStudentRequest;
 import com.example.response.StudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,15 @@ public class StudentService {
             studentResponseList.add(new StudentResponse(student));
         });
         return studentResponseList;
+    }
+
+
+    public Student createStudent (CreateStudentRequest createStudentRequest){
+        Student student = new Student(createStudentRequest);
+
+        System.out.println("Student : "+student);
+
+        student = studentRepository.save(student);
+        return student;
     }
 }

@@ -1,12 +1,16 @@
 package com.example.entity;
 
+import com.example.request.CreateStudentRequest;
+import com.example.response.StudentResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "student")
 public class Student {
 
@@ -23,5 +27,11 @@ public class Student {
 
     @Column(name="email")
     private String email;
+
+    public Student(CreateStudentRequest createStudentRequest){
+        this.firstName=createStudentRequest.getFirstName();
+        this.lastName= createStudentRequest.getLastName();
+        this.email= createStudentRequest.getEmail();
+    }
 
 }
