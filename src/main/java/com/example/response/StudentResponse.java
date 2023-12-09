@@ -12,7 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class StudentResponse {
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonProperty("ID ")
     private int id;
     @JsonProperty("First Name")
     private String first_name;
@@ -22,6 +23,7 @@ public class StudentResponse {
     private String email;
 
     public StudentResponse(Student student){
+        this.id=student.getId();
         this.first_name = student.getFirstName();
         this.last_name = student.getLastName();
         this.email = student.getEmail();

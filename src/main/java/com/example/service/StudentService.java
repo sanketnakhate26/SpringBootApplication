@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.entity.Student;
 import com.example.repository.StudentRepository;
 import com.example.request.CreateStudentRequest;
+import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class StudentService {
@@ -35,5 +37,34 @@ public class StudentService {
 
         student = studentRepository.save(student);
         return student;
+    }
+
+    public Student updateStudent(UpdateStudentRequest updateStudentRequest){
+        Student student = studentRepository.findById(updateStudentRequest.getId()).get();
+        if(updateStudentRequest.getFirstName() != null && !updateStudentRequest.getFirstName().isEmpty()){
+            student.setFirstName(updateStudentRequest.getFirstName());
+        }
+        if(updateStudentRequest.getLastName() != null && !updateStudentRequest.getLastName().isEmpty()){
+            student.setLastName(updateStudentRequest.getLastName());
+        }
+        if(updateStudentRequest.getEmail() != null && !updateStudentRequest.getEmail().isEmpty()){
+            student.setEmail(updateStudentRequest.getEmail());
+        }
+
+        student = studentRepository.save(student);
+        return student;
+    }
+
+    public String deleteStudent(Integer id){
+        try {
+            Student student = studentRepository.findById(id).get();
+            if(null == student)
+                return "Student does not exist.";
+        }catch (Exception e){
+            return "Exception : "+e;
+        }
+
+        studentRepository.deleteById(id);
+        return "Student has been delete Successfully.";
     }
 }

@@ -1,17 +1,18 @@
 package com.example.request;
 
-
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class CreateStudentRequest {
+@Setter
+public class UpdateStudentRequest {
 
-
-    @NotBlank(message = "First Name is Required.")
+    @NotNull(message = "Student ID is required.")
+    private Integer id;
     private String firstName;
     private String lastName;
     private String email;
+
+
 }
