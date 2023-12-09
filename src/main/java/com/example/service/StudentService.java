@@ -5,6 +5,7 @@ import com.example.repository.StudentRepository;
 import com.example.request.CreateStudentRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,4 +68,9 @@ public class StudentService {
         studentRepository.deleteById(id);
         return "Student has been delete Successfully.";
     }
+
+    public List<Student> getByFirstName(String firstName){
+        return studentRepository.findByFirstName(firstName);
+    }
+
 }

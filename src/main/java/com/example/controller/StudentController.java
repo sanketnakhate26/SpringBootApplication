@@ -5,11 +5,13 @@ import com.example.request.CreateStudentRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import com.example.service.StudentService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,9 +41,26 @@ public class StudentController {
             return new StudentResponse(student);
     }
 
-    @DeleteMapping("delete")
-    public String deleteStudent(@RequestParam Integer id){
-
+    // delete method to handle id in the query params
+//    @DeleteMapping("delete")
+//    public String deleteStudent(@RequestParam Integer id){
+//
+//        return studentService.deleteStudent(id);
+//    }
+    @DeleteMapping("delete/{id}")
+    public String deleteStudent(@PathVariable Integer id){
         return studentService.deleteStudent(id);
+    }
+
+    @GetMapping("getByFirstName/{firstName}")
+    public List<StudentResponse> getByFirstName(@PathVariable String firstName){
+        List<Student> students = studentService.getByFirstName(firstName);
+        List<StudentResponse> studentResponses = new ArrayList<>();
+
+        students.stream().forEach(student -> {
+            studentResponses.add(new StudentResponse(student));
+        });
+
+        return studentResponses;
     }
 }
