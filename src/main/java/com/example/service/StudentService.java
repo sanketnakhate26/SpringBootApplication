@@ -8,6 +8,8 @@ import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -80,5 +82,14 @@ public class StudentService {
 
     public List<Student> getByFirstNameIn(InQueryRequest inQueryRequest){
         return studentRepository.findByFirstNameIn(inQueryRequest.getFirstNames());
+    }
+
+    public List<Student> getAllStudentsWithPagination(Integer pageSize, Integer pageNumber)
+    {
+        Pageable pageable = PageRequest.of(pageNumber-1,pageSize);
+
+        List<Student> studentList =  studentRepository.findAll(pageable).getContent();
+
+        return studentList;
     }
 }
