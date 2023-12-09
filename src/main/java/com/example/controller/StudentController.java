@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.entity.Student;
 import com.example.request.CreateStudentRequest;
+import com.example.request.InQueryRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import com.example.service.StudentService;
@@ -63,4 +64,20 @@ public class StudentController {
 
         return studentResponses;
     }
+    @GetMapping("getByFirstNameAndLastName")
+    public StudentResponse getByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName){
+        return new StudentResponse(studentService.getByFirstNameAndLastName(firstName,lastName));
+    }
+
+    @GetMapping("getByFirstNameIn")
+    public List<StudentResponse> getByFirstNameIn(@RequestBody InQueryRequest inQueryRequest){
+        List<Student> students = studentService.getByFirstNameIn(inQueryRequest);
+        List<StudentResponse> studentResponses = new ArrayList<StudentResponse>();
+
+        students.stream().forEach(student -> {
+            studentResponses.add(new StudentResponse(student));
+        });
+        return studentResponses;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.entity.Student;
 import com.example.repository.StudentRepository;
 import com.example.request.CreateStudentRequest;
+import com.example.request.InQueryRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -73,4 +74,11 @@ public class StudentService {
         return studentRepository.findByFirstName(firstName);
     }
 
+    public Student getByFirstNameAndLastName(String firstName, String lastName){
+        return studentRepository.findByFirstNameAndAndLastName(firstName,lastName);
+    }
+
+    public List<Student> getByFirstNameIn(InQueryRequest inQueryRequest){
+        return studentRepository.findByFirstNameIn(inQueryRequest.getFirstNames());
+    }
 }
