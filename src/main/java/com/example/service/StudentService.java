@@ -137,4 +137,9 @@ public class StudentService {
     {
         return studentRepository.deleteStudentByFirstNameJSQL(firstName);
     }
+
+    public List<Student> getStudentByCity(String city)
+    {
+        return studentRepository.findByAddress_City(city);
+    }
 }

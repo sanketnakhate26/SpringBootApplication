@@ -146,4 +146,18 @@ public class StudentController {
         return studentService.deleteStudentByFirstNameJSQL(firstName) + "(s) got deleted.";
     }
 
+    @GetMapping("getStudentByCity/{city}")
+    List<StudentResponse> getStudentByCity(@PathVariable String city){
+        List<Student> studentList = studentService.getStudentByCity(city);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> {
+            studentResponseList.add(new StudentResponse(student));
+        });
+
+        return studentResponseList;
+
+
+    }
+
 }
