@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -91,5 +92,38 @@ public class StudentService {
         List<Student> studentList =  studentRepository.findAll(pageable).getContent();
 
         return studentList;
+    }
+
+    public List<Student> getAllWithSort(){
+        Sort sort = Sort.by(Sort.Direction.ASC,"firstName");
+
+        List<Student> studentList = studentRepository.findAll(sort);
+
+        return studentList;
+    }
+
+    public List<Student> getAllStudentsLike(String firstName)
+    {
+        return studentRepository.findByFirstNameContains(firstName);
+    }
+
+    public List<Student> getAllStudentsStartsWith(String firstName)
+    {
+        return studentRepository.findByFirstNameStartsWith(firstName);
+    }
+
+    public Student getAllStudentsWithFirstNameAndLastNameQuery(String firstName, String lastName)
+    {
+        return studentRepository.getAllStudentsWithFirstNameAndLastNameQuery(firstName,lastName);
+    }
+
+    public Integer updateFirstNameWithIdJPQL(Integer id, String firstName)
+    {
+        return studentRepository.updateFirstNameWithIdJPQL(id,firstName);
+    }
+
+    public Integer deleteStudentByFirstNameJSQL(String firstName)
+    {
+        return studentRepository.deleteStudentByFirstNameJSQL(firstName);
     }
 }

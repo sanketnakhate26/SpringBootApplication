@@ -6,7 +6,6 @@ import com.example.request.InQueryRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import com.example.service.StudentService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -91,6 +90,58 @@ public class StudentController {
         });
 
         return studentResponseList;
+    }
+
+    @GetMapping("getAllWithSort")
+    public List<StudentResponse> getAllWithSort(){
+        List<Student> studentList = studentService.getAllWithSort();
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> {
+            studentResponseList.add(new StudentResponse(student));
+        });
+
+        return studentResponseList;
+    }
+
+    @GetMapping("getAllStudentsLike/{firstName}")
+    public List<StudentResponse> getAllStudentsLike(@PathVariable String firstName){
+        List<Student> studentList = studentService.getAllStudentsLike(firstName);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> {
+            studentResponseList.add(new StudentResponse(student));
+        });
+
+        return studentResponseList;
+    }
+
+    @GetMapping("getAllStudentsStartsWith/{firstName}")
+    public List<StudentResponse> getAllStudentsStartsWith(@PathVariable String firstName){
+        List<Student> studentList = studentService.getAllStudentsStartsWith(firstName);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> {
+            studentResponseList.add(new StudentResponse(student));
+        });
+
+        return studentResponseList;
+
+    }
+
+    @GetMapping("getAllWithFirstNameAndLastNameQuery")
+    public StudentResponse getAllStudentsWithFirstNameAndLastNameQuery(@RequestParam String firstName, @RequestParam String lastName){
+        return new StudentResponse(studentService.getAllStudentsWithFirstNameAndLastNameQuery(firstName,lastName));
+    }
+
+    @PutMapping("updateFirstNameWithIdJPQL/{id}/{firstName}")
+    public String updateFirstNameWithIdJPQL(@PathVariable Integer id, @PathVariable String firstName){
+        return studentService.updateFirstNameWithIdJPQL(id,firstName) + "(s) got updated.";
+    }
+
+    @PutMapping("deleteStudentByFirstNameJSQL/{firstName}")
+    public String deleteStudentByFirstNameJSQL(@PathVariable String firstName){
+        return studentService.deleteStudentByFirstNameJSQL(firstName) + "(s) got deleted.";
     }
 
 }
