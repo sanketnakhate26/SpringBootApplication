@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.entity.Address;
 import com.example.entity.Student;
 import com.example.request.CreateStudentRequest;
 import com.example.request.InQueryRequest;
@@ -29,9 +30,10 @@ public class StudentController {
 
     @PostMapping("create")
     public StudentResponse createStudent(@Valid @RequestBody CreateStudentRequest createStudentRequest){
-            Student student =  studentService.createStudent(createStudentRequest);
 
-            return new StudentResponse(student);
+        Student student =  studentService.createStudent(createStudentRequest);
+
+        return new StudentResponse(student);
     }
 
     @PutMapping("update")

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -27,6 +28,10 @@ public class Student {
 
     @Column(name="email")
     private String email;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     public Student(CreateStudentRequest createStudentRequest){
         this.firstName=createStudentRequest.getFirstName();
