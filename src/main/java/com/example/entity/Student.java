@@ -29,7 +29,7 @@ public class Student {
     @Column(name="email")
     private String email;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
