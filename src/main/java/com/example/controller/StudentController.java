@@ -5,7 +5,9 @@ import com.example.entity.Student;
 import com.example.request.CreateStudentRequest;
 import com.example.request.InQueryRequest;
 import com.example.request.UpdateStudentRequest;
+import com.example.response.AddressResponse;
 import com.example.response.StudentResponse;
+import com.example.service.AddressService;
 import com.example.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@Component
 @RequestMapping("/api/student/")
 public class StudentController {
 
     @Autowired
     StudentService studentService;
 
-    @GetMapping("getAll")
+    @Autowired
+    AddressService addressService;
+
+    @GetMapping("getAllStudents")
     public List<StudentResponse> getAllStudents(){
         return studentService.getAllStudents();
     }
