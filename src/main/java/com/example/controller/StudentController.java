@@ -36,16 +36,12 @@ public class StudentController {
     @GetMapping("getAllStudents")
     public List<StudentResponse> getAllStudents(){
 
-        logger.info("GetALlStudents Request started ");
-
         List<Student> studentList = studentService.getAllStudents();
         List<StudentResponse> studentResponseList = new ArrayList<>();
 
         studentList.stream().forEach(student -> {
             studentResponseList.add(new StudentResponse(student));
         });
-
-        logger.info("GetALlStudents Responce received "+studentResponseList.toString());
 
         return studentResponseList;
 
