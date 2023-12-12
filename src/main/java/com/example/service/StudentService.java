@@ -9,6 +9,7 @@ import com.example.request.InQueryRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,14 +30,8 @@ public class StudentService {
     @Autowired
     AddressRepository addressRepository;
 
-    public List<StudentResponse> getAllStudents(){
-        List<StudentResponse> studentResponseList = new ArrayList<StudentResponse>();
-        List<Student> studentsList = studentRepository.findAll();
-
-        studentsList.stream().forEach(student -> {
-            studentResponseList.add(new StudentResponse(student));
-        });
-        return studentResponseList;
+    public List<Student> getAllStudents(){
+        return studentRepository.findAll();
     }
 
 

@@ -10,16 +10,22 @@ import com.example.response.StudentResponse;
 import com.example.service.AddressService;
 import com.example.service.StudentService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/api/student/")
 public class StudentController {
+
+    //slf4j
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     StudentService studentService;
@@ -29,7 +35,20 @@ public class StudentController {
 
     @GetMapping("getAllStudents")
     public List<StudentResponse> getAllStudents(){
-        return studentService.getAllStudents();
+
+        logger.info("GetALlStudents Request started ");
+
+        List<Student> studentList = studentService.getAllStudents();
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> {
+            studentResponseList.add(new StudentResponse(student));
+        });
+
+        logger.info("GetALlStudents Responce received "+studentResponseList.toString());
+
+        return studentResponseList;
+
     }
 
     @PostMapping("create")
